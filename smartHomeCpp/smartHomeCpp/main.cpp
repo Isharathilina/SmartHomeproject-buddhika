@@ -241,15 +241,6 @@ int main(void){
 		Lcd4_Clear();
 		
 		
-		/*
-		char aa[10] = "ishara";
-		strcat(aa,"11");
-		strcat(aa,",");
-		strcat(aa,"55");
-		//strcat(aa,"\n");
-		*/
-		
-		
 		//BtString(" ishara thilina\n");
 		BtString(datastr);
 		

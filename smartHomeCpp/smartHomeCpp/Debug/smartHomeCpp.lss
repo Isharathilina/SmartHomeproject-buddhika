@@ -1127,8 +1127,6 @@ int main(void){
 		_delay_ms(1000);
 		Lcd4_Clear();
  7dc:	0e 94 ee 01 	call	0x3dc	; 0x3dc <_Z10Lcd4_Clearv>
-		//strcat(aa,"\n");
-		*/
 		
 		
 		//BtString(" ishara thilina\n");
