@@ -1,7 +1,15 @@
-// data format data:- temp, humidty,adc0air, adc1sound
-// pb0 r1 fan, pb1 r2 airalarm
-// pd3 for dh11 data
-// a0 air sensor, a1 sound sensor
+/*
+
+ data format data:- temp, humidity,soil,
+ 
+ pb0  tempfan, 
+ pb1  humidity control, 
+ pb2  soil control
+ 
+ pd3 for dh11 data
+ a0 soil sensor, 
+
+*/
 
 # define F_CPU 1000000UL
 
@@ -153,14 +161,13 @@ int main(void){
 	InitADC();
 	USARTInit(12); //12 double 51
 	
-	
-	
+	_delay_ms(2500);  // give time for init dht11
 	
 
 	while(1){
 		char datastr[30] = "data:-";
-		int adcval;
-		int airval;
+		int soilMoistureVal;
+		//int airval;
 		
 		Request();		/* send start pulse */
 		Response();		/* receive response */
@@ -211,29 +218,33 @@ int main(void){
 			
 			
 			
+			Lcd4_Write_String(" Soil val:-");
+			soilMoistureVal = ReadADC(0);  
+			convertstr(soilMoistureVal);
+			Lcd4_Write_String(str);
+			
+			#ifndef NOSEARIAL
+			strcat(datastr, str);
+			strcat(datastr, ",");
+			#endif
+			
+			
+			/*
+			adcval = ReadADC(1);
+			convertstr(adcval);
+			
+			#ifndef NOSEARIAL
+			strcat(datastr, str);
+			strcat(datastr, ",");
+			#endif
+			
+			*/
+			
+			
 		}
 		
 		
 		
-		
-		
-		Lcd4_Write_String(" A6=");
-		 airval = ReadADC(0);
-		convertstr(airval);
-		Lcd4_Write_String(str);
-		
-		#ifndef NOSEARIAL
-		strcat(datastr, str);
-		strcat(datastr, ",");
-		#endif
-		
-		adcval = ReadADC(1);
-		convertstr(adcval);
-		
-		#ifndef NOSEARIAL
-		strcat(datastr, str);
-		strcat(datastr, ",");
-		#endif
 		
 		
 		
@@ -241,22 +252,31 @@ int main(void){
 		Lcd4_Clear();
 		
 		
-		//BtString(" ishara thilina\n");
+		//BtString(" ishara \n");
 		BtString(datastr);
 		
-		if(I_Temp>28){
+		if(I_Temp>30){
 			PORTB = (0<<0);  // on fan relay	
 		}else{
 			PORTB = (1<<0);  // off fan relay		
 		}
 		
 		
-		
-		if(airval>200){
+		if(I_RH<90){     // humidity
 			PORTB = (0<<1);  // on fan relay
 			}else{
 			PORTB = (1<<1);  // off fan relay
 		}
+		
+		
+		if(soilMoistureVal<300){
+			PORTB = (0<<2);  // on fan relay
+			}else{
+			PORTB = (1<<2);  // off fan relay
+		}
+		
+		// toglle process for test
+		//PORTB ^= 0x04;   // Toggle bit 0 only.
 		
 		
 		
