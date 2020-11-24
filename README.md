@@ -1,4 +1,4 @@
-# Smart_Home_Monitor
+# Smart Green House Controller and Monitor
 ## Technologies
 * Esp8266
 * Arduino
