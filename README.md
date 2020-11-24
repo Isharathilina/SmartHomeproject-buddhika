@@ -7,7 +7,7 @@
 * Atmel Studio
 
 ## Peoject Discription
-This project for autocratically control Grean house Envirment </br> 
+This project for automatically control Grean house Envirment </br> 
 And monitor It using web application
 Esp8266 used only for wifi connectivity ( user requirement)
 
