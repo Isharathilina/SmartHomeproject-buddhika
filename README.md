@@ -7,8 +7,8 @@
 * Atmel Studio
 
 ## Peoject Discription
-This project for automatically control Grean house Envirment </br> 
-And monitor It using web application
+This project for automatically control the Greenhouse Environment
+And monitor It using the web application
 Esp8266 used only for wifi connectivity ( user requirement)
 
 ## Atmega 32 Pin configaration
